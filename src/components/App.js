@@ -1,13 +1,15 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import Navigation from "./common/Navigation";
-import {Switch, Route, BrowserRouter} from 'react-router-dom'
+import {Switch, Route, Router} from 'react-router-dom'
 import {Container} from "react-bootstrap";
 
 import {setLoading,setError,clearError} from '../stores/CommonStore'
 import {setUser} from '../stores/UserStore'
 import {setAdminRoutes, setAnonymousRoutes, setLoggedRoutes} from "../stores/RouterStore";
 import UserModel from "../models/UserModel";
+
+import history from '../history'
 
 export default function App() {
     const routerStore = useSelector(state => state.RouterStore)
@@ -48,8 +50,7 @@ export default function App() {
         checkUserAuth()
     })
 
-    return (
-        <BrowserRouter>
+    return <Router history={history}>
             <Navigation/>
             <Switch>
                 {routerStore.routes.map(({ path, Component })=>{
@@ -60,6 +61,5 @@ export default function App() {
                     </Route>
                 })}
             </Switch>
-        </BrowserRouter>
-    );
+        </Router>
 }
