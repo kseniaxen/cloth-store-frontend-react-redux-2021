@@ -2,11 +2,12 @@ import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import Navigation from "./common/Navigation";
 import {Switch, Route, Router} from 'react-router-dom'
-import {Container} from "react-bootstrap";
+import {Container, Spinner} from "react-bootstrap";
 
 import {setLoading,setError,clearError} from '../stores/CommonStore'
-import {setUser} from '../stores/UserStore'
+import {setIsLoginFlag, setUser} from '../stores/UserStore'
 import {setAdminRoutes, setAnonymousRoutes, setLoggedRoutes} from "../stores/RouterStore";
+import {adminRoutes, loggedRoutes, anonymousRoutes} from "../stores/RouterStore";
 import UserModel from "../models/UserModel";
 
 import history from '../history'
@@ -15,40 +16,96 @@ export default function App() {
     const routerStore = useSelector(state => state.RouterStore)
     const commonStore = useSelector(state => state.CommonStore)
     const userStore = useSelector(state => state.UserStore)
+    const user = useSelector((state) => state.UserStore.user)
     const dispatch = useDispatch()
 
     const checkUserAuth = () => {
         dispatch(clearError())
         dispatch(setLoading(true))
         fetch(`${commonStore.basename}/auth/users/check`, {
-            credentials:'include'
-        }).then((response)=>{
+            credentials: 'include'
+        }).then((response) => {
             return response.json()
-        }).then((response)=>{
-            if(response){
-                if(response.status === 'success'){
-                    if(response.data){
+        }).then((response) => {
+            if (response) {
+                if (response.status === 'success') {
+                    if (response.data) {
                         dispatch(setUser(new UserModel(response.data.name, response.data.roleName)))
+                    }else{
+                        dispatch(setIsLoginFlag(false))
                     }
-                }else if(response.status === 'fail'){
+                } else if (response.status === 'fail') {
+                    dispatch(setIsLoginFlag(false))
                     dispatch(setError(response.message))
                 }
+                dispatch(setLoading(false))
             }
+        }).catch((error) => {
+            dispatch(setIsLoginFlag(false))
+            dispatch(setLoading(false))
+            dispatch(setError(error.message))
+            throw error
         })
-        if(userStore.user){
-            if(userStore.user.roleName.includes("ADMIN")){
-                dispatch(setAdminRoutes())
-            }else{
-                dispatch(setLoggedRoutes())
-            }
-        }else{
-            dispatch(setAnonymousRoutes())
-        }
     }
 
     useEffect(() => {
         checkUserAuth()
-    })
+    },[userStore.isLoginFlag])
+
+    useEffect(() => {
+        const changeRoutesOnUser = () => {
+            if (user) {
+                let signOutRoute
+                if(userStore.user.roleName.includes("ADMIN")){
+                    signOutRoute = adminRoutes.
+                        find(route => route['path'].includes('/auth:out'))
+                }else{
+                    signOutRoute = loggedRoutes.
+                        find(route => route['path'].includes('/auth:out'))
+                }
+
+                if (signOutRoute) {
+                    signOutRoute['name'] = `Log Out (${userStore.user.name})`
+                }
+
+                if (userStore.user.roleName.includes("ADMIN")) {
+                    dispatch(setAdminRoutes())
+                } else {
+                    dispatch(setLoggedRoutes())
+                }
+                history.replace('/')
+            } else {
+                dispatch(setAnonymousRoutes())
+                history.replace('/signin')
+            }
+        }
+        changeRoutesOnUser()
+    },[userStore.user])
+
+    useEffect(() => {
+        history.listen((location) => {
+            if(location.pathname.includes("/auth:out")){
+                dispatch(setLoading(true))
+                fetch(`${commonStore.authBasename}/logout`, {
+                    credentials: 'include'
+                }).then((response) => {
+                    return response.json()
+                }).then((response) => {
+                    if (response) {
+                        if (response.status === 'success') {
+                            // если выход произошел успешно - знуляем наблюдаемое свойство user
+                            dispatch(setUser(null))
+                        } else if (response.status === 'fail') {
+                            dispatch(setError(response.message))
+                        }
+                    }
+                }).catch((error) => {
+                    dispatch(setError(error.message))
+                    throw error
+                })
+            }
+        })
+    },[history])
 
     return <Router history={history}>
             <Navigation/>
@@ -56,7 +113,7 @@ export default function App() {
                 {routerStore.routes.map(({ path, Component })=>{
                     return <Route key={path} path={path} exact>
                         <Container>
-                            <Component/>
+                             <Component/>
                         </Container>
                     </Route>
                 })}

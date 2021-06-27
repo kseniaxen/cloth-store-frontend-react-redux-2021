@@ -9,20 +9,20 @@ import DashboardCategories from "../components/pages/admin/DashboardCategories";
 import DashboardSizes from "../components/pages/admin/DashboardSizes";
 import DashboardProducts from "../components/pages/admin/DashboardProducts";
 
-const anonymousRoutes = [
+export const anonymousRoutes = [
     { path: '/', name: 'Home', Component: Home },
     { path: '/shopping', name: 'Shopping', Component: Shopping },
     { path: '/signin', name: 'Log In', Component: SignIn },
     { path: '/signup', name: 'Registration', Component: SignUp}
 ]
 
-const loggedRoutes = [
+export const loggedRoutes = [
     { path: '/', name: 'Home', Component: Home },
     { path: '/shopping', name: 'Shopping', Component: Shopping },
     { path: '/auth:out', name: 'Log Out', Component: Home }
 ]
 
-const adminRoutes = [
+export const adminRoutes = [
     { path: '/', name: 'Home', Component: Home },
     { path: '/shopping', name: 'Shopping', Component: Shopping },
     { path: '/admin', name: 'Dashboard', Component: Dashboard },
