@@ -23,9 +23,6 @@ export default function SignIn(){
     const handleSubmitFrom = (e) => {
         e.preventDefault()
 
-        dispatch(setUserName(loginUser))
-        dispatch(setPassword(passwordUser))
-
         dispatch(clearError())
         dispatch(setLoading(true))
         fetch(`${commonStore.authBasename}/login`, {
@@ -39,17 +36,18 @@ export default function SignIn(){
             return response.status
         }).then((statusCode) => {
             if (statusCode === userStore.HTTP_STATUS_OK) {
+                dispatch(setUserName(loginUser))
+                dispatch(setPassword(passwordUser))
                 dispatch(setIsLoginFlag(true))
             } else {
                 setShowModal(true)
-               dispatch(setError("Login or password is wrong"))
+                dispatch(setError("Login or password is wrong"))
             }
-            dispatch(setLoading(false))
         }).catch((error) => {
-            dispatch(setLoading(false))
             dispatch(setError(error.message))
             throw error
         })
+        dispatch(setLoading(false))
     }
 
     useEffect(() => {

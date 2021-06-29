@@ -5,7 +5,7 @@ import {Switch, Route, Router} from 'react-router-dom'
 import {Container, Spinner} from "react-bootstrap";
 
 import {setLoading,setError,clearError} from '../stores/CommonStore'
-import {setIsLoginFlag, setUser} from '../stores/UserStore'
+import {setIsLoginFlag, setUser, reset} from '../stores/UserStore'
 import {setAdminRoutes, setAnonymousRoutes, setLoggedRoutes} from "../stores/RouterStore";
 import {adminRoutes, loggedRoutes, anonymousRoutes} from "../stores/RouterStore";
 import UserModel from "../models/UserModel";
@@ -55,7 +55,7 @@ export default function App() {
     useEffect(() => {
         const changeRoutesOnUser = () => {
             if (user) {
-                let signOutRoute
+               /* let signOutRoute
                 if(userStore.user.roleName.includes("ADMIN")){
                     signOutRoute = adminRoutes.
                         find(route => route['path'].includes('/auth:out'))
@@ -68,6 +68,7 @@ export default function App() {
                     signOutRoute['name'] = `Log Out (${userStore.user.name})`
                 }
 
+                */
                 if (userStore.user.roleName.includes("ADMIN")) {
                     dispatch(setAdminRoutes())
                 } else {
@@ -95,14 +96,18 @@ export default function App() {
                         if (response.status === 'success') {
                             // если выход произошел успешно - знуляем наблюдаемое свойство user
                             dispatch(setUser(null))
+                            dispatch(setIsLoginFlag(false))
                         } else if (response.status === 'fail') {
                             dispatch(setError(response.message))
                         }
+                        dispatch(setLoading(false))
                     }
                 }).catch((error) => {
+                    dispatch(setLoading(false))
                     dispatch(setError(error.message))
                     throw error
                 })
+                //dispatch(setIsLoginFlag(false))
             }
         })
     },[history])
@@ -113,7 +118,7 @@ export default function App() {
                 {routerStore.routes.map(({ path, Component })=>{
                     return <Route key={path} path={path} exact>
                         <Container>
-                             <Component/>
+                            {commonStore.loading ? <Spinner animation="border" style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/> : <Component/>}
                         </Container>
                     </Route>
                 })}
