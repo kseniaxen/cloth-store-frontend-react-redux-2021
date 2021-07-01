@@ -22,48 +22,52 @@ export default function SignUp(){
 
     const handleSubmitFrom = (e) => {
         e.preventDefault()
-
-        dispatch(clearError())
-        dispatch(setLoading(true))
-        fetch(`${commonStore.basename}/auth/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({'name': loginUser, 'password': passwordUser})
-        }).then((response) => {
-            return response.json()
-        }).then((response) => {
-            if (response.status === 'success') {
-                fetch(`${commonStore.authBasename}/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    credentials: 'include',
-                    body: `username=${loginUser}&password=${passwordUser}`
-                }).then((response) => {
-                    return response.status
-                }).then((statusCode) => {
-                    if (statusCode === userStore.HTTP_STATUS_OK) {
-                        dispatch(setUserName(loginUser))
-                        dispatch(setPassword(passwordUser))
-                        dispatch(setIsLoginFlag(true))
-                    }
-                }).catch((error) => {
-                    dispatch(setError(error.message))
-                    throw error
-                })
-            }else {
-                setShowModal(true)
-                dispatch(setError(response.message))
-            }
-        }).catch((error) => {
-            dispatch(setError(error.message))
-            throw error
-        })
-        dispatch(setLoading(false))
+        if(loginUser === '' || passwordUser === ''){
+            dispatch(setError("Input a valid login or password"))
+            setShowModal(true)
+        }else {
+            dispatch(clearError())
+            dispatch(setLoading(true))
+            fetch(`${commonStore.basename}/auth/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({'name': loginUser, 'password': passwordUser})
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                if (response.status === 'success') {
+                    fetch(`${commonStore.authBasename}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        credentials: 'include',
+                        body: `username=${loginUser}&password=${passwordUser}`
+                    }).then((response) => {
+                        return response.status
+                    }).then((statusCode) => {
+                        if (statusCode === userStore.HTTP_STATUS_OK) {
+                            dispatch(setUserName(loginUser))
+                            dispatch(setPassword(passwordUser))
+                            dispatch(setIsLoginFlag(true))
+                        }
+                    }).catch((error) => {
+                        dispatch(setError(error.message))
+                        throw error
+                    })
+                } else {
+                    setShowModal(true)
+                    dispatch(setError(response.message))
+                }
+            }).catch((error) => {
+                dispatch(setError(error.message))
+                throw error
+            })
+            dispatch(setLoading(false))
+        }
     }
 
     useEffect(() => {

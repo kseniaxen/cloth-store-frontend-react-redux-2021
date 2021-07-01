@@ -23,31 +23,36 @@ export default function SignIn(){
     const handleSubmitFrom = (e) => {
         e.preventDefault()
 
-        dispatch(clearError())
-        dispatch(setLoading(true))
-        fetch(`${commonStore.authBasename}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            credentials: 'include',
-            body: `username=${loginUser}&password=${passwordUser}`
-        }).then((response) => {
-            return response.status
-        }).then((statusCode) => {
-            if (statusCode === userStore.HTTP_STATUS_OK) {
-                dispatch(setUserName(loginUser))
-                dispatch(setPassword(passwordUser))
-                dispatch(setIsLoginFlag(true))
-            } else {
-                setShowModal(true)
-                dispatch(setError("Login or password is wrong"))
-            }
-        }).catch((error) => {
-            dispatch(setError(error.message))
-            throw error
-        })
-        dispatch(setLoading(false))
+        if(loginUser === '' || passwordUser === ''){
+            dispatch(setError("Input a valid login or password"))
+            setShowModal(true)
+        }else{
+            dispatch(clearError())
+            dispatch(setLoading(true))
+            fetch(`${commonStore.authBasename}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'include',
+                body: `username=${loginUser}&password=${passwordUser}`
+            }).then((response) => {
+                return response.status
+            }).then((statusCode) => {
+                if (statusCode === userStore.HTTP_STATUS_OK) {
+                    dispatch(setUserName(loginUser))
+                    dispatch(setPassword(passwordUser))
+                    dispatch(setIsLoginFlag(true))
+                } else {
+                    setShowModal(true)
+                    dispatch(setError("Login or password is wrong"))
+                }
+            }).catch((error) => {
+                dispatch(setError(error.message))
+                throw error
+            })
+            dispatch(setLoading(false))
+        }
     }
 
     useEffect(() => {
@@ -70,7 +75,8 @@ export default function SignIn(){
                                               value={loginUser}
                                               onChange={handleUserNameChange}
                                               type="text"
-                                              placeholder="Enter login" />
+                                              placeholder="Enter login">
+                                </Form.Control>
                                 </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
@@ -78,7 +84,8 @@ export default function SignIn(){
                                               id="password"
                                               value={passwordUser}
                                               onChange={handlePasswordChange}
-                                              placeholder="Enter password" />
+                                              placeholder="Enter password">
+                                </Form.Control>
                             </Form.Group>
                             <Button variant="primary"
                                     id='signInButton'

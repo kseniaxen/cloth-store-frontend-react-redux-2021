@@ -13,12 +13,14 @@ export default function Navigation(){
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                     {routerStore.routes.map(route => {
+                        if(!/^Dashboard[A-z]+$/.test(route.name)) {
                             return <NavLink
-                                            style={{marginLeft:'20px'}}
-                                            key={route.path}
-                                            to={route.path}>
-                                        {route.name}
-                                    </NavLink>
+                                style={{marginLeft: '20px'}}
+                                key={route.path}
+                                to={route.path}>
+                                {route.name}
+                            </NavLink>
+                        }
                         })}
                     </Nav>
                 </Navbar.Collapse>
