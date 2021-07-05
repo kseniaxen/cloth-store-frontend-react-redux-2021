@@ -59,7 +59,7 @@ export default function DashboardSubcategories(){
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        if(nameSubcategory.length > 0){
+        if(nameSubcategory.length > 0 && nameSubcategory.trim() !== ''){
             if(subcategoryStore.subcategories.find((c) => c.name === nameSubcategory) !== undefined) {
                 setShowError(true)
                 setErrorMessage('This name is already takes')
@@ -185,6 +185,7 @@ export default function DashboardSubcategories(){
                             <td>
                                 <div>
                                     <Button
+                                        style={{marginLeft:'15px'}}
                                         onClick={(e) => {handleSubcategoryEdit(e,subcategory.id)}}>
                                         <EditIcon/>
                                     </Button>

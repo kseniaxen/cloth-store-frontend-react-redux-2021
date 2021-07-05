@@ -59,7 +59,7 @@ export default function DashboardSizes(){
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        if(titleSize.length > 0){
+        if(titleSize.length > 0 && titleSize.trim() !== ''){
             if(sizeStore.sizes.find((c) => c.title === titleSize) !== undefined) {
                 setShowError(true)
                 setErrorMessage('This title is already takes')
@@ -185,6 +185,7 @@ export default function DashboardSizes(){
                             <td>
                                 <div>
                                     <Button
+                                        style={{marginLeft:'15px'}}
                                         onClick={(e) => {handleSizeEdit(e,size.id)}}>
                                         <EditIcon/>
                                     </Button>

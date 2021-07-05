@@ -60,7 +60,7 @@ export default function DashboardCategories(){
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        if(nameCategory.length > 0){
+        if(nameCategory.length > 0 && nameCategory.trim() !== ''){
             if(categoryStore.categories.find((c) => c.name === nameCategory) !== undefined){
                 setShowError(true)
                 setErrorMessage('This name is already takes')
@@ -186,6 +186,7 @@ export default function DashboardCategories(){
                             <td>
                                 <div>
                                     <Button
+                                        style={{marginLeft:'15px'}}
                                         onClick={(e) => {handleCategoryEdit(e,category.id)}}>
                                         <EditIcon/>
                                     </Button>
