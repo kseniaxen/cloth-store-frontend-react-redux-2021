@@ -20,7 +20,7 @@ export default function SignIn(){
         setPasswordUser(e.target.value)
     }
 
-    const handleSubmitFrom = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault()
 
         if(loginUser === '' || passwordUser === ''){
@@ -90,7 +90,7 @@ export default function SignIn(){
                             <Button variant="primary"
                                     id='signInButton'
                                     disabled={commonStore.loading}
-                                    onClick = {handleSubmitFrom}
+                                    onClick = {handleSubmitForm}
                                     type="submit">
                                 Submit
                             </Button>

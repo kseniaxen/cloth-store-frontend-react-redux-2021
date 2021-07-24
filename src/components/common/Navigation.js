@@ -1,10 +1,24 @@
 import React from "react";
-import { useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {setCartShow} from "../../stores/CartStore"
 
 export default function Navigation(){
+    const userStore = useSelector(state => state.UserStore)
     const routerStore = useSelector(state => state.RouterStore)
+    const cartStore = useSelector(state => state.CartStore)
+    const dispatch = useDispatch()
+
+    const handleCartIconClick = () => {
+        if (cartStore.cartShow) {
+            dispatch(setCartShow(false))
+        } else {
+            dispatch(setCartShow(true))
+        }
+    }
+
     return(
         <Navbar bg="light" expand="lg" sticky="top">
             <Container>
@@ -23,6 +37,11 @@ export default function Navigation(){
                         }
                         })}
                     </Nav>
+                    <div style={{ display: userStore.user ? 'inline' : 'none', marginLeft: '20px'}}>
+                        <ShoppingCartIcon
+                            onClick={handleCartIconClick}/>
+                        {cartStore.cartItemsCount} ({cartStore.cartItemsTotalPrice})
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

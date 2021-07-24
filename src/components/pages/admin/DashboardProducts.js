@@ -232,7 +232,7 @@ export default function DashboardProducts(){
         setCurrentProductId(productId)
         setNameProduct(productStore.products.find((c) => c.id === productId)?.name || '')
         setDescriptionProduct(productStore.products.find((c) => c.id === productId)?.description || '')
-        setPriceProduct(productStore.products.find((c) => c.id === productId)?.price || 0)
+        setPriceProduct(parseFloat(productStore.products.find((c) => c.id === productId)?.price).toFixed(2) || 0)
         setQuantityProduct(productStore.products.find((c) => c.id === productId)?.quantity || 0)
         setCategoryIdProduct(productStore.products.find((c) => c.id === productId)?.category.id || null)
         setSubcategoryIdProduct(productStore.products.find((c) => c.id === productId)?.subcategory.id || null)

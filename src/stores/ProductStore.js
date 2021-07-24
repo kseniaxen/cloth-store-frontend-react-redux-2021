@@ -49,7 +49,7 @@ const ProductStore = createSlice({
         setQuantityFrom:(state, action) => {
             state.quantityFrom = action.payload
         },
-        historyPush:(state) => {
+        historyPush:(state, action) => {
             history.push({
                 pathname: '/shopping',
                 search: `?orderBy=${state.orderBy}
@@ -59,6 +59,7 @@ const ProductStore = createSlice({
                             price<:${state.priceTo};
                             quantity>:${state.quantityFrom};
                             quantity<:${state.quantityTo}
+                            ${(action.payload && action.payload.length > 0) ? ';name:' + action.payload : ''}
                             ${(state.categoriesFilter && state.categoriesFilter.length > 0) ? ';category:' + JSON.stringify(state.categoriesFilter) : ''}
                             ${(state.subcategoryFilter && state.subcategoryFilter.length > 0) ? ';subcategory:' + JSON.stringify(state.subcategoryFilter) : ''}
                             ${(state.sizeFilter && state.sizeFilter.length > 0) ? ';size:' + JSON.stringify(state.sizeFilter) : ''}`

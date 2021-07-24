@@ -6,6 +6,8 @@ import CategoryReducer from "../stores/CategoryStore";
 import SubcategoryReducer from "../stores/SubcategoryStore";
 import SizeReducer from "../stores/SizeStore";
 import ProductReducer from "../stores/ProductStore";
+import CartReducer from "../stores/CartStore";
+import {CallReceivedTwoTone} from "@material-ui/icons";
 
 export default configureStore({
     reducer: {
@@ -15,7 +17,8 @@ export default configureStore({
         CategoryStore:CategoryReducer,
         SubcategoryStore:SubcategoryReducer,
         SizeStore:SizeReducer,
-        ProductStore: ProductReducer
+        ProductStore: ProductReducer,
+        CartStore: CartReducer
     },middleware:getDefaultMiddleware ({
         serializableCheck:false
     })
