@@ -416,7 +416,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Title
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -433,7 +433,7 @@ export default function Shopping(){
                             <Accordion defaultActiveKey="0">
                                 <Card>
                                     <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                             Category
                                         </Accordion.Toggle>
                                     </Card.Header>
@@ -458,7 +458,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Clothes
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -484,7 +484,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Sizes
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -510,7 +510,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Price range
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -536,7 +536,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Quantity range
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -562,7 +562,7 @@ export default function Shopping(){
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" style={{color:"black"}}>
                                         Sort by
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -570,19 +570,19 @@ export default function Shopping(){
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <Col>
-                                            <Button variant={activeOrderButton === 'Newest In' ? 'primary':'outline-primary'}
+                                            <Button variant={activeOrderButton === 'Newest In' ? 'dark':'outline-dark'}
                                                     onClick={(e) => {
                                                         handleOrderButtonClick(e, 'id', 'DESC', 'Newest In')
                                                     }}>
                                                 Newest In
                                             </Button>
-                                            <Button variant={activeOrderButton === 'Cheep' ? 'primary':'outline-primary'}
+                                            <Button variant={activeOrderButton === 'Cheep' ? 'dark':'outline-dark'}
                                                     onClick={(e) => {
                                                         handleOrderButtonClick(e, 'price', 'ASC', 'Cheep')
                                                     }}>
                                                 Price (Low to High)
                                             </Button>
-                                            <Button variant={activeOrderButton === 'Costly' ? 'primary':'outline-primary'}
+                                            <Button variant={activeOrderButton === 'Costly' ? 'dark':'outline-dark'}
                                                     onClick={(e) => {
                                                         handleOrderButtonClick(e, 'price', 'DESC', 'Costly')
                                                     }}>
@@ -609,7 +609,7 @@ export default function Shopping(){
                                                         <ListGroupItem>Quantity: {product.quantity}</ListGroupItem>
                                                     </ListGroup>
                                                     <Button
-                                                        variant="primary"
+                                                        variant="dark"
                                                         style={{display: userStore.user ? 'inline' : 'none'}}
                                                         onClick={(e) => {
                                                                 handleAddToCart(e, product.id)

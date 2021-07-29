@@ -173,7 +173,7 @@ export default function Home(){
                                             <Card.Title>{product.price} ₴</Card.Title>
                                             <Card.Subtitle style={{fontSize:'14px'}} className="mb-2 text-muted">{product.name}/{product.subcategory.name}</Card.Subtitle>
                                             <Button
-                                                variant="primary"
+                                                variant="dark"
                                                 style={{display: userStore.user ? 'inline' : 'none'}}
                                                 onClick={(e) => {
                                                     handleAddToCart(e, product.id)
@@ -202,7 +202,7 @@ export default function Home(){
                                         <Card.Title>{product.price} ₴</Card.Title>
                                         <Card.Subtitle style={{fontSize:'14px'}} className="mb-2 text-muted">{product.name}/{product.subcategory.name}</Card.Subtitle>
                                         <Button
-                                            variant="primary"
+                                            variant="dark"
                                             style={{display: userStore.user ? 'inline' : 'none'}}
                                             onClick={(e) => {
                                                 handleAddToCart(e, product.id)

@@ -101,7 +101,7 @@ export default function SignUp(){
                                               onChange={handlePasswordChange}
                                               placeholder="Enter password" />
                             </Form.Group>
-                            <Button variant="primary"
+                            <Button variant="dark"
                                     id='signInButton'
                                     disabled={commonStore.loading}
                                     onClick = {handleSubmitFrom}

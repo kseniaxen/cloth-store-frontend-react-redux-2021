@@ -8,6 +8,7 @@ import Dashboard from "../components/pages/admin/Dashboard";
 import DashboardCategories from "../components/pages/admin/DashboardCategories";
 import DashboardSizes from "../components/pages/admin/DashboardSizes";
 import DashboardProducts from "../components/pages/admin/DashboardProducts";
+import DashboardOrders from "../components/pages/admin/DashboardOrders"
 
 export const anonymousRoutes = [
     { path: '/', name: 'Home', Component: Home },
@@ -30,6 +31,7 @@ export const adminRoutes = [
     { path: '/admin/subcategories', name: 'DashboardSubcategories', Component: DashboardSubcategories },
     { path: '/admin/sizes', name: 'DashboardSizes', Component: DashboardSizes },
     { path: '/admin/products', name: 'DashboardProducts', Component: DashboardProducts },
+    { path: '/admin/orders', name: 'DashboardOrders', Component: DashboardOrders },
     { path: '/auth:out', name: 'Log Out', Component: Home }
 ]
 

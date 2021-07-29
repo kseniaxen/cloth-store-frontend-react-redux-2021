@@ -21,7 +21,7 @@ export default function Navigation(){
     }
 
     return(
-        <Navbar bg="light" expand="lg" sticky="top">
+        <Navbar bg="dark" variant="dark" sticky="top">
             <Container>
                 <Navbar.Brand>Cloth Store</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -30,7 +30,7 @@ export default function Navigation(){
                     {routerStore.routes.map(route => {
                         if(!/^Dashboard[A-z]+$/.test(route.name)) {
                             return <NavLink
-                                style={{marginLeft: '20px'}}
+                                style={{marginLeft: '20px', color:"white"}}
                                 key={route.path}
                                 to={route.path}>
                                 {route.name}
@@ -38,12 +38,12 @@ export default function Navigation(){
                         }
                         })}
                     </Nav>
-                    <div style={{display: userStore.user ? 'inline': 'none', marginLeft: '20px'}}>
+                    <div style={{display: userStore.user ? 'inline': 'none', marginLeft: '20px', color:"white"}}>
                         <Typography variant="h7" component="h7">
                             {userStore.userName}
                         </Typography>
                     </div>
-                    <div style={{ display: userStore.user ? 'inline' : 'none', marginLeft: '20px'}}>
+                    <div style={{ display: userStore.user ? 'inline' : 'none', marginLeft: '20px', color:"white"}}>
                         <ShoppingCartIcon
                             style={{cursor: 'pointer'}}
                             onClick={handleCartIconClick}/>

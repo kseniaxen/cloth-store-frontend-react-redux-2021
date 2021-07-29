@@ -21,6 +21,7 @@ import {
     setCartShow,
     setCartStatusResponse
 } from "../stores/CartStore";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function App() {
     const routerStore = useSelector(state => state.RouterStore)
@@ -191,7 +192,9 @@ export default function App() {
     }, [cartStore.cartItems])
 
     const handlePurchase = () => {
-
+        setSnackBarText('Your order has been accepted for processing!')
+        setSnackBarSeverity('success')
+        setSnackBarVisibility(true)
     }
 
     const handleSnackBarClose = (e, reason) => {
@@ -244,11 +247,11 @@ export default function App() {
                     // уведомление пользователя об успехе
                     notifySuccess()
                 } else if (responseModel.status === 'fail') {
-                    commonStore.setError(responseModel.message)
+                    dispatch(setError(responseModel.message))
                 }
             }
         }).catch((error) => {
-            commonStore.setError(error.message)
+            dispatch(setError(error.message))
             throw error
         })
         dispatch(setLoading(false))
@@ -324,6 +327,7 @@ export default function App() {
                                                 <td>{(item.price * item.quantity).toFixed(2)}</td>
                                                 <td>
                                                     <Button
+                                                        variant='dark'
                                                         style={{marginLeft:'15px'}}
                                                         onClick={(e) => {
                                                             handleCartItemPlus(e, item.productId)
@@ -331,6 +335,7 @@ export default function App() {
                                                         <ExposurePlus1Icon/>
                                                     </Button>
                                                     <Button
+                                                        variant='dark'
                                                         style={{marginLeft:'15px'}}
                                                         onClick={(e) => {
                                                             handleCartItemNeg(e, item.productId)
@@ -351,9 +356,9 @@ export default function App() {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handlePurchase}>Purchase</Button>
+                    <Button onClick={handlePurchase} variant='dark'>Purchase</Button>
                     <Button onClick={() => {dispatch(setCartShow(false))
-                    }}>Close</Button>
+                    }} variant='dark'>Close</Button>
                 </Modal.Footer>
             </Modal>
         <Snackbar

@@ -87,7 +87,7 @@ export default function SignIn(){
                                               placeholder="Enter password">
                                 </Form.Control>
                             </Form.Group>
-                            <Button variant="primary"
+                            <Button variant="dark"
                                     id='signInButton'
                                     disabled={commonStore.loading}
                                     onClick = {handleSubmitForm}
