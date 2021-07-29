@@ -4,6 +4,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {setCartShow} from "../../stores/CartStore"
+import {Typography} from "@material-ui/core";
 
 export default function Navigation(){
     const userStore = useSelector(state => state.UserStore)
@@ -37,8 +38,14 @@ export default function Navigation(){
                         }
                         })}
                     </Nav>
+                    <div style={{display: userStore.user ? 'inline': 'none', marginLeft: '20px'}}>
+                        <Typography variant="h7" component="h7">
+                            {userStore.userName}
+                        </Typography>
+                    </div>
                     <div style={{ display: userStore.user ? 'inline' : 'none', marginLeft: '20px'}}>
                         <ShoppingCartIcon
+                            style={{cursor: 'pointer'}}
                             onClick={handleCartIconClick}/>
                         {cartStore.cartItemsCount} ({cartStore.cartItemsTotalPrice})
                     </div>

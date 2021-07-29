@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import history from '../../history'
 import {clearError, setError, setLoading} from "../../stores/CommonStore";
 import {setCategories} from "../../stores/CategoryStore";
 import {setSubcategories} from "../../stores/SubcategoryStore";
@@ -18,13 +17,12 @@ import {
     setSubcategoryFilter,
     setSizeFilter
 } from "../../stores/ProductStore";
-import {Accordion, Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Accordion, Button, Card, Col, Container, Form, ListGroup, ListGroupItem, Row} from "react-bootstrap";
 import noImg from "../../images/noImg.png"
 import {setCartItems, setCartStatusResponse} from "../../stores/CartStore";
 import Alert from "@material-ui/lab/Alert";
-import {InputAdornment, Snackbar, TextField} from "@material-ui/core";
+import {Snackbar, TextField} from "@material-ui/core";
 
-import SearchIcon from '@material-ui/icons/Search';
 
 export default function Shopping(){
     const commonStore = useSelector(state => state.CommonStore)
@@ -606,9 +604,10 @@ export default function Shopping(){
                                                 <Card.Body>
                                                     <Card.Title>{product.price} ₴</Card.Title>
                                                     <Card.Subtitle style={{fontSize:'14px'}} className="mb-2 text-muted">{product.name}/{product.subcategory.name}</Card.Subtitle>
-                                                    <Card.Text>
-                                                        Size - {product.size.title}
-                                                    </Card.Text>
+                                                    <ListGroup className="list-group-flush">
+                                                        <ListGroupItem>Size: {product.size.title}</ListGroupItem>
+                                                        <ListGroupItem>Quantity: {product.quantity}</ListGroupItem>
+                                                    </ListGroup>
                                                     <Button
                                                         variant="primary"
                                                         style={{display: userStore.user ? 'inline' : 'none'}}

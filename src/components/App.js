@@ -8,7 +8,7 @@ import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1';
 import ExposureNeg1Icon from '@material-ui/icons/ExposureNeg1';
 
 import {setLoading,setError,clearError} from '../stores/CommonStore'
-import {setIsLoginFlag, setUser} from '../stores/UserStore'
+import {setIsLoginFlag, setUser, setUserName} from '../stores/UserStore'
 import {setAdminRoutes, setAnonymousRoutes, setLoggedRoutes} from "../stores/RouterStore";
 import UserModel from "../models/UserModel";
 
@@ -47,6 +47,7 @@ export default function App() {
                 if (response.status === 'success') {
                     if (response.data) {
                         dispatch(setUser(new UserModel(response.data.name, response.data.roleName)))
+                        dispatch(setUserName(response.data.name))
                         fetchCartItems()
                     }else{
                         dispatch(setIsLoginFlag(false))
